@@ -25,13 +25,14 @@ cacheDirectories:
 
 pre:
   # Skip execution of the tests in the pre step
-  - mvn -Dmaven.repo.local=./.m2 dependency:resolve
+  - mvn dependency:resolve
+
+testRunnerCommand: mvn test -Dplatname=linux
 
 post:
   - ls target/surefire-reports/
 
 mergeArtifacts: true
-
 
 uploadArtefacts:
  - name: ExecutionSnapshots
@@ -44,7 +45,7 @@ partialReports:
   frameworkName: extent
   email:
     to:
-      - johnwick190501@gmail.com
+      - anubhavb@lambdatest.com
 
 framework:
   name: maven/testng
@@ -53,4 +54,4 @@ framework:
     - "-Dplatname=linux"
     - "--file=pom02.xml"
 
-jobLabel: [Autosplit 2, Report, Artifacts, Email]
+jobLabel: [HYP, CI-CD, GitHub Actions]

@@ -2,21 +2,19 @@ trigger:
 - main
 
 pool:
-  vmImage: 'ubuntu-latest'  # Adjust for macOS if needed
+  vmImage: 'ubuntu-latest' 
 
 steps:
   - task: Bash@3
+    displayName: 'Fetch and Run HyperExecute'
     inputs:
       targetType: 'inline'
       script: |
-        # Download Hyperexecute CLI for macOS (adjust for other OS)
-        name: Download HyperExecute CLI
-        script: wget https://downloads.lambdatest.com/hyperexecute/darwin/hyperexecute
+        # Download Hyperexecute CLI for Linux (matching your ubuntu-latest pool)
+        wget https://downloads.lambdatest.com/hyperexecute/linux/hyperexecute
         
         # Grant execute permission to the downloaded binary
-        name: Make HyperExecute executable
-        script: chmod +x hyperexecute
+        chmod +x hyperexecute
         
         # Run Hyperexecute with user credentials and configuration file
-        name: Run Hyperexecute Tests
-        script: ./hyperexecute --user $(LT_USERNAME) --key $(LT_ACCESS_KEY) --config yaml/autosplit_linux.yaml
+        ./hyperexecute --user $(LT_USERNAME) --key $(LT_ACCESS_KEY) --config yaml/autosplit_linux.yaml

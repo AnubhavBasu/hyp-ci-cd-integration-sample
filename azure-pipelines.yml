@@ -19,4 +19,4 @@ steps:
         
         # Run Hyperexecute with user credentials and configuration file
         name: Run Hyperexecute Tests
-        script: ./hyperexecute --user <your_username> --key <your_access_key> --config <your_yaml_file_path>
+        script: ./hyperexecute --user $(LT_USERNAME) --key $(LT_ACCESS_KEY) --config yaml/autosplit_linux.yaml

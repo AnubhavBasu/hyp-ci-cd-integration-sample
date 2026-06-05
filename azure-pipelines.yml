@@ -2,21 +2,21 @@ trigger:
 - main
 
 pool:
-  vmImage: 'ubuntu-latest'  # Adjust for macOS if needed
+  vmImage: 'ubuntu-latest' 
 
 steps:
   - task: Bash@3
+    displayName: 'Install Dependencies and Run HyperExecute'
     inputs:
       targetType: 'inline'
       script: |
-        # Download Hyperexecute CLI for macOS (adjust for other OS)
-        name: Download HyperExecute CLI
-        script: wget https://downloads.lambdatest.com/hyperexecute/darwin/hyperexecute
+        # 1. Force install Maven on the Linux agent so HyperExecute can find it
+        sudo apt-get update
+        sudo apt-get install maven -y
         
-        # Grant execute permission to the downloaded binary
-        name: Make HyperExecute executable
-        script: chmod +x hyperexecute
+        # 2. Download the Linux HyperExecute CLI
+        wget https://downloads.lambdatest.com/hyperexecute/linux/hyperexecute
+        chmod +x hyperexecute
         
-        # Run Hyperexecute with user credentials and configuration file
-        name: Run Hyperexecute Tests
-        script: ./hyperexecute --user <your_username> --key <your_access_key> --config <your_yaml_file_path>
+        # 3. Execute the tests
+        ./hyperexecute --user $(LT_USERNAME) --key $(LT_ACCESS_KEY) --config yaml/autosplit_linux.yaml
